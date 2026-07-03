@@ -6,27 +6,29 @@ type Stacker interface {
 }
 
 type stack struct {
+	//...
 	data []int
 }
 
 func (s *stack) Push(v int) {
-	//append сам расширит базовый массив, если не хватит cap
+
 	s.data = append(s.data, v)
 }
 
 func (s *stack) Pop() int {
 	if len(s.data) == 0 {
-		panic("стек пуст")
+		panic("stack is empty")
 	}
-
-	//LIFO: берём последний элемент и укорачиваем слайс на 1
-	v := s.data[len(s.data)-1]
+	last := s.data[len(s.data)-1]
 	s.data = s.data[:len(s.data)-1]
-	return v
+
+	//Обнулять элемент нужно только если элементы ссылочные
+	//Поэтому можно просто срезать последний (верхний)
+
+	return last
 }
 
 func New() *stack {
+	
 	return &stack{}
 }
-
-func main() {}
