@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // RemoveUnordered удаляет элемент по индексу без сохранения порядка.
 // Если индекс выходит за границы слайса, возвращает исходный слайс.
 func RemoveUnordered[T any](s []T, i int) []T {
@@ -71,7 +73,7 @@ func RemoveDuplicates[T comparable](s []T) []T {
 // RemoveIf удаляет элементы, удовлетворяющие условию predicate.
 func RemoveIf[T any](s []T, predicate func(T) bool) []T {
 	// реализовать
-		var count int
+	var count int
 	for _, v := range s {
 		if !predicate(v) {
 			s[count] = v
@@ -79,46 +81,41 @@ func RemoveIf[T any](s []T, predicate func(T) bool) []T {
 		}
 	}
 	return s[:count]
-	return s
 }
 
 // RemoveOrderedWithNil удаляет элемент по индексу (для слайса указателей),
 // обнуляя удаляемый элемент для предотвращения утечек памяти.
 func RemoveOrderedWithNil[T any](s []*T, i int) []*T {
 	//реализовать
-	if i >= len(s) || i < 0 {
+	if i >= len(s) && i < 0 {
 		return s
 	}
+	copy(s[i:], s[i+1:])
 
-	for j := i; j < len(s)-1; j++ {
-		s[j] = s[j+1]
-	}
-	//После сдвига последний элемент дублируется (он же теперь на позиции len-2)
-	//Если его не занулить - базовый массив продолжит держать указатель
-	//и GC не сможет освободить объект, хотя из слайса мы его "удалили"
 	s[len(s)-1] = nil
+
 	s = s[:len(s)-1]
 	return s
+	//Тут смещение благодаря copy().
+	//Последний элемент (указатель) затираем и пересоздаём срез.
+	//После этого Сборщик Мусора удалит элемент, на который нет ссылок
 }
 
 // ShrinkCapacity сокращает вместимость слайса, если она превышает
 // удвоенную длину после удаления элементов.
 func ShrinkCapacity[T any](s []T) []T {
 	//реализовать
-	if cap(s) <= 2*len(s) {
-		return s
+	if cap(s) > len(s)*2 {
+		newSlice := make([]T, len(s), len(s))
+		copy(newSlice, s)
+		return newSlice
 	}
-	//Единственный способ уменьшить cap - создать новый слайс и скопировать
-	//s[:len(s):len(s)] не подойдёт
-	//потому что, прошлый массив всё равно остаётся в памяти
-	shrunk := make([]T, len(s))
-	copy(shrunk, s)
-	return shrunk
+	return s
 }
 
 func main() {
 	//реализовать
-		//1. RemoveUnordered - на место удалённого встаёт последний
+	//1. RemoveUnordered - на место удалённого встаёт последний
 	a := []int{1, 2, 3, 4, 5}
 	a = RemoveUnordered(a, 1)
 	fmt.Println("RemoveUnordered(i=1):", a) // [1 5 3 4]
