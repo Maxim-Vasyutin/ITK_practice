@@ -82,6 +82,6 @@ func main() {
 	//5
 	empty := struct{}{}
 	fmt.Println("empty struct address ", unsafe.Pointer(&empty))
-	//какой-то zerobase/nilpointer 
+	//какой-то zerobase/nilpointer (заглушка)
 }
 ```

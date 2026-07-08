@@ -130,3 +130,5 @@ func (ec ElectricCar) GetBatteryLevel() int {
 }
 
 //////////////////////////
+
+//сделать встраиваение, а не дублирование (методы start stop)

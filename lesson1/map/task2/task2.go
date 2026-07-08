@@ -41,7 +41,10 @@ func PrintWordFrequency(freqMap map[string]int) {
 
 func main() {
 	freqMap := make(map[string]int)
-	text := "golang is great and and and and golang is fast fast fast"
+	text := "Golang is great and and and and golang is fast fast fast"
 	freqMap = WordFrequency(text)
 	PrintWordFrequency(freqMap)
 }
+
+
+//Привести к одному регистру (нижний)

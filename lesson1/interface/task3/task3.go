@@ -30,6 +30,7 @@ type Smartwatch struct {
 	Model     string
 }
 
+//Поправить нейминг на "текущую версию"
 func (sp *Smartphone) UpdateOS(version string) error {
 	if version >= "12.0" {
 		return ErrUnsupported

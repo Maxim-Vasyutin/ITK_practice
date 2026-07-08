@@ -15,14 +15,15 @@ import (
 func main() {
 	var numbers []*int
 	for _, value := range []int{10, 20, 30, 40} {
+		//(фикс)
+		//v := value 
+		//numbers = append(numbers, &v)
 		numbers = append(numbers, &value)
 	}
 	for _, number := range numbers {
 		fmt.Println("d", *number)
 	}
 }
-//Всё работает как надо
-//Не до конца понимаю как и почему работал этот баг до версии 1.22
 ```
 ----
 ### 2.
@@ -86,12 +87,12 @@ func main() {
 	first := []int{10, 20, 30, 40}
 	second := make([]*int, len(first))
 	for i, v := range first {
+		//
 		second[i] = &v
 	}
 	fmt.Println(*second[0], *second[1])
 }
-//Всё работает как надо
-//Не до конца понимаю как и почему работал этот баг до версии 1.22
+//в 0 и в 1 находить одно адресное пространство
 ```
 ----
 ### 5.
@@ -122,3 +123,6 @@ func mutareSlice(slice []string) {
 }
 //main не видел изменения в слайсе через append
 //безопаснее сделать через стандартный return
+
+
+//сделать возврат значения через указатель

@@ -21,6 +21,7 @@ func GetAge(name string) int {
 	return m[name]
 }
 
+
 // Удаление записи
 func DeletePerson(name string) {
 	// Реализуйте удаление
@@ -50,3 +51,9 @@ func main() {
 	fmt.Println("После удаления Boris:")
 	PrintAll()
 }
+
+
+//Можно возвращать не только int но и bool
+//Добавить идиому _,ok
+
+//Добавление удаление записей - добавить мьютекс. гонка данных
