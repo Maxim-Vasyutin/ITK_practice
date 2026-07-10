@@ -10,7 +10,7 @@ func FilterByValue(m map[int]string, allowedValues []string) map[int]string {
 	// Преобразовать allowedValues в set для быстрой проверки
 	// Создать новую map и заполнить её подходящими элементами
 	allowedSet := make(map[string]struct{})
-	local_map := make(map[int]string)
+	localMap := make(map[int]string)
 
 	for _, word := range allowedValues {
 		allowedSet[word] = struct{}{}
@@ -18,10 +18,10 @@ func FilterByValue(m map[int]string, allowedValues []string) map[int]string {
 
 	for i, word := range m {
 		if _, ok := allowedSet[word]; ok {
-			local_map[i] = word
+			localMap[i] = word
 		}
 	}
-	return local_map
+	return localMap
 }
 
 // InvertMap меняет ключи и значения местами.
@@ -106,6 +106,5 @@ func main() {
 		fmt.Printf("Ошибка не сработала, результат: %v\n", failedResult)
 	}
 }
-
 
 //Нейминг поправить (без)

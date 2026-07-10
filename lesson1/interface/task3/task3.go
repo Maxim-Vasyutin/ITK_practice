@@ -30,14 +30,14 @@ type Smartwatch struct {
 	Model     string
 }
 
-//Поправить нейминг на "текущую версию"
-func (sp *Smartphone) UpdateOS(version string) error {
-	if version >= "12.0" {
+func (sp *Smartphone) UpdateOS(currentVersion string) error {
+	if currentVersion >= "12.0" {
 		return ErrUnsupported
 	}
-	sp.OSVersion = version
+	sp.OSVersion = currentVersion
 	return nil
 }
+
 func (lpt *Laptop) UpdateOS(version string) error {
 	if !strings.HasPrefix(version, "Windows") {
 		return ErrUnsupported
@@ -63,8 +63,8 @@ func (sw *Smartwatch) GetInfo() string {
 	return fmt.Sprintf("Модель: %s, OC: %s", sw.Model, sw.OSVersion)
 }
 
-//ИИ написал тест
-//Ошибки были завязаны на неточностях и на невнимательном чтении задания
+// ИИ написал тест
+// Ошибки были завязаны на неточностях и на невнимательном чтении задания
 func main() {
 	// Хелпер: пробуем обновить и печатаем результат
 	tryUpdate := func(d Device, version string) {

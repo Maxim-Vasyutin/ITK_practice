@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 var m map[string]int
 
@@ -16,15 +19,23 @@ func AddPerson(name string, age int) {
 }
 
 // Получение возраста
-func GetAge(name string) int {
+func GetAge(name string) (int, bool) {
 	// Реализуйте получение возраста
-	return m[name]
-}
+	if _, ok := m[name]; ok {
 
+		return m[name], ok
+	}
+	return m[name], false
+}
 
 // Удаление записи
 func DeletePerson(name string) {
 	// Реализуйте удаление
+	var mu sync.Mutex
+
+	mu.Lock()
+	defer mu.Unlock()
+
 	delete(m, name)
 }
 
@@ -44,7 +55,11 @@ func main() {
 	fmt.Println("Все записи:")
 	PrintAll()
 
-	fmt.Println("Возраст Anna:", GetAge("Anna"))
+	age, ok := GetAge("Anna")
+	if age == 0 && ok {
+		fmt.Println("Возраст Anna больше 0")
+	}
+	fmt.Println("Возраст Anna:", age)
 
 	DeletePerson("Boris")
 
@@ -52,8 +67,7 @@ func main() {
 	PrintAll()
 }
 
-
-//Можно возвращать не только int но и bool
+//Можно возвращать не только int но и bool из GetAge
 //Добавить идиому _,ok
 
 //Добавление удаление записей - добавить мьютекс. гонка данных

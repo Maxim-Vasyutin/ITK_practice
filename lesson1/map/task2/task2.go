@@ -9,13 +9,13 @@ import (
 // WordFrequency принимает строку текста и возвращает map с частотой слов.
 func WordFrequency(text string) map[string]int {
 	// TODO: Реализуйте функцию.
-	map_count := make(map[string]int)
+	mapCount := make(map[string]int)
 	str := strings.Fields(text)
 
 	for _, count := range str {
-		map_count[count]++
+		mapCount[count]++
 	}
-	return map_count
+	return mapCount
 }
 
 // PrintWordFrequency выводит частотный анализ слов, отсортированный по убыванию частоты.
@@ -42,9 +42,14 @@ func PrintWordFrequency(freqMap map[string]int) {
 func main() {
 	freqMap := make(map[string]int)
 	text := "Golang is great and and and and golang is fast fast fast"
+
+	//
+	text = strings.ToLower(text)
+	//
+
 	freqMap = WordFrequency(text)
 	PrintWordFrequency(freqMap)
 }
 
-
 //Привести к одному регистру (нижний)
+//нейминг (camelCase)
