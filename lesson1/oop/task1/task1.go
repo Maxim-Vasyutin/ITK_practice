@@ -23,7 +23,7 @@ type Car struct {
 	engineOn bool
 }
 
-func (c Car) Honk() string {
+func (c *Car) Honk() string {
 	return "Beep beep!"
 }
 
@@ -47,7 +47,7 @@ func (c *Car) GetInfo() string {
 	return fmt.Sprintf("Машина %s\nДвигатель запущен: %v", c.brand, c.engineOn)
 }
 
-func (c Car) GetEngineStatus() bool {
+func (c *Car) GetEngineStatus() bool {
 	return c.engineOn
 }
 
@@ -57,37 +57,16 @@ type Truck struct {
 	cargoCapacity float64
 }
 
-func (t Truck) Honk() string {
+func (t *Truck) Honk() string {
 	return "Honk Honk!"
 }
 
-func (t *Truck) StartEngine() error {
-	//если правда, что он запущен, то возвращаем ошибку запуска
-	if t.engineOn {
-		return ErrEngineAlreadyRunning
-	}
-	t.engineOn = true
-	return nil
-}
-
-func (t *Truck) StopEngine() error {
-
-	if !t.engineOn {
-		return ErrEngineOff
-	}
-	t.engineOn = false
-	return nil
-}
 func (t *Truck) GetInfo() string {
 	return fmt.Sprintf("Грузовик %s\nДвигатель запущен: %v"+
 		"\nГрузоподъёмность: %f", t.brand, t.engineOn, t.cargoCapacity)
 }
 
-func (t Truck) GetEngineStatus() bool {
-	return t.engineOn
-}
-
-func (t Truck) GetCargoCapacity() float64 {
+func (t *Truck) GetCargoCapacity() float64 {
 	return t.cargoCapacity
 }
 
@@ -109,26 +88,20 @@ func (ec *ElectricCar) StartEngine() error {
 	return nil
 }
 
-func (ec *ElectricCar) StopEngine() error {
-	if !ec.engineOn {
-		return ErrEngineOff
-	}
-	ec.engineOn = false
-	return nil
-}
 
 func (ec *ElectricCar) GetInfo() string {
 	return fmt.Sprintf("Машина %s\nДвигатель запущен: %v"+
 		"\nУровень заряда батареи: %d", ec.brand, ec.engineOn, ec.batteryLevel)
 }
 
-func (ec ElectricCar) GetEngineStatus() bool {
-	return ec.engineOn
-}
-func (ec ElectricCar) GetBatteryLevel() int {
+func (ec *ElectricCar) GetBatteryLevel() int {
 	return ec.batteryLevel
 }
 
 //////////////////////////
 
 //сделать встраиваение, а не дублирование (методы start stop)
+
+//Удалил 5 методов. Методы StartEngine, StopEngine, GetEngineStatus у грузовика и StopEngine, GetEngineStatus у электрокара.
+// Всё работает. 
+// Не понимаю как будет происходить связь у дочернего класса и родительского. 
