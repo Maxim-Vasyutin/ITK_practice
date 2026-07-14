@@ -33,6 +33,7 @@ func main() {
        fmt.Println("ok")  
     }  
 }
+//oops
 //////////////////////////////////////////////////////
 2.
 package main  
@@ -56,15 +57,20 @@ func checkErr(err error) {
 func main() {  
     var e1 error  
     checkErr(e1)  
-  
+    //true
+
     var e *errorString  
     checkErr(e)  
-  
+    //false
+
     e = &errorString{}  
     checkErr(e)  
-  
+    //false
+    //создаёт структуру с нулевым значением 
+    
     e = nil  
     checkErr(e)  
+    //false
 }
 ////////////////////////////////////////////////////
 3.
@@ -92,7 +98,7 @@ func main() {
 	err1 := returnError(true)
 	err2 := returnError(false)
 
-	fmt.Println("err1 == nil:", err1 == nil)
-	fmt.Println("err2 == nil:", err2 == nil)
-
+	fmt.Println("err1 == nil:", err1 == nil) //false
+	fmt.Println("err2 == nil:", err2 == nil) //false
+    //Когда интерфейс == nil? пока ему не присвоено или не объялено ни одно значение
 }
